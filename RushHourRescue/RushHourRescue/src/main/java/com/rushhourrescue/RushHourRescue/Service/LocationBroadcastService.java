@@ -13,7 +13,7 @@ public class LocationBroadcastService {
     private SimpMessagingTemplate template;
 
     public void broadcastLocationUpdate(UserLocation location) {
-        if (isWithinEligibleZone(location)) {
+        if (isWithinEligibleZone(location.getLatitude(), location.getLongitude())) {
             template.convertAndSend("/topic/locations", location);
         }
     }
