@@ -21,8 +21,13 @@ public class LocationBroadcastService {
         }
     }
 
-    private boolean isWithinEligibleZone(UserLocation location) {
-        return location.getLatitude() >= MIN_LAT && location.getLatitude() <= MAX_LAT
-                && location.getLongitude() >= MIN_LON && location.getLongitude() <= MAX_LON;
+    private boolean isWithinEligibleZone(double latitude, double longitude) {
+        TrafficZone trafficZone = zoneRepository.findTopByOrderByIdDesc();
+        if (trafficZone == null) {
+            throw new IllegalStateException("Zone boundaries are unavailable");
+        }
+
+        return latitude >= trafficZone.getMinLat() && latitude <= trafficZone.getMaxLat() &&
+                longitude >= trafficZone.getMinLon() && longitude <= trafficZone.getMaxLon();
     }
 }
