@@ -7,11 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LocationBroadcastService {
-    //TODO: GO THROUGH THIS SERVICE CAREFULLY
-    private static Double MAX_LON;
-    private static Double MIN_LON;
-    private static Double MAX_LAT;
-    private static Double MIN_LAT;
+    
+
     @Autowired
     private SimpMessagingTemplate template;
 
