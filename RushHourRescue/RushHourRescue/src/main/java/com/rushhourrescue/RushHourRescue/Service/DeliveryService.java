@@ -43,22 +43,46 @@ public class DeliveryService {
     }
 
     public void assignNextAvailableRiderToNextRequest(UserRequest nextRequest) {
-            UserRequest request = requestService.getPrioritizedRequests().stream().findFirst().orElse(null);
-        Rider availableRider = riderRepository.findByStatus("AVAILABLE").stream().findFirst().orElse(null);
-            if ((request != null && request.getRequest_id().equals(nextRequest.getRequest_id())) && availableRider != null) {
-                availableRider.setStatus("BUSY");
-                riderRepository.save(availableRider);
-                nextRequest.setStatus(UserRequest.RequestStatus.ASSIGNED);
-                requestService.updateRequestStatus(nextRequest.getRequest_id(), UserRequest.RequestStatus.ASSIGNED);
-                System.out.println("Assigned Rider ID " + availableRider.getRider_id() + " to request ID" + nextRequest.getRequest_id());
+        System.out.println("📌 Received nextRequest: " + nextRequest);
+        System.out.println("📌 nextRequest ID BEFORE fetching: " + nextRequest.getRequest_id());
 
-            } else if (request != null && request.getRequest_id().equals(nextRequest.getRequest_id())) {
-                nextRequest.setStatus(UserRequest.RequestStatus.PENDING);
-                requestService.updateRequestStatus(nextRequest.getRequest_id(), UserRequest.RequestStatus.PENDING);
-                System.out.println("Sorry, there no currently available riders. Please be patient");
-            } else {
-                System.out.println("Sorry, there are currently neither no available riders nor available requests.");
+        // Ensure the request is fetched from the database
+        UserRequest request = requestService.getUserRequest(nextRequest.getRequest_id());
+
+        System.out.println("📌 request AFTER fetching: " + request);
+        System.out.println("📌 request ID AFTER fetching: " + (request != null ? request.getRequest_id() : "NULL"));
+
+        if (request == null) {
+            System.out.println("⚠️ The request is NULL, meaning it doesn't exist in the database.");
+            return;
         }
+        Rider availableRider = riderRepository.findByStatus("AVAILABLE").stream().findFirst().orElse(null);
+        if (availableRider != null) {
+            availableRider.setStatus("BUSY");
+            riderRepository.save(availableRider);
+
+            request.setStatus(UserRequest.RequestStatus.ASSIGNED);
+            requestService.updateRequestStatus(request.getRequest_id(), UserRequest.RequestStatus.ASSIGNED);
+            System.out.println("✅ Assigned Rider ID " + availableRider.getRider_id() + " to request ID " + request.getRequest_id());
+        } else {
+            System.out.println("❌ No available riders found.");
+        }
+//            if (request.getRequest_id().equals(nextRequest.getRequest_id()) && availableRider != null) {
+//                availableRider.setStatus("BUSY");
+//
+//                riderRepository.save(availableRider);
+//                nextRequest.setStatus(UserRequest.RequestStatus.ASSIGNED);
+//                requestService.updateRequestStatus(nextRequest.getRequest_id(), UserRequest.RequestStatus.ASSIGNED);
+//                System.out.println("Assigned Rider ID " + availableRider.getRider_id() + " to request ID" + nextRequest.getRequest_id());
+//
+//                //TODO: Find out why nextRequest.getRequest_id() is null
+//            } else if (request.getRequest_id().equals(nextRequest.getRequest_id())) {
+//                nextRequest.setStatus(UserRequest.RequestStatus.PENDING);
+//                requestService.updateRequestStatus(nextRequest.getRequest_id(), UserRequest.RequestStatus.PENDING);
+//                System.out.println("Sorry, there no currently available riders. Please be patient");
+//            } else {
+//                System.out.println("Sorry, there are currently neither no available riders nor available requests.");
+//        }
 
 
     }

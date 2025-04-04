@@ -8,6 +8,6 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface UserLocationRepository extends JpaRepository<UserLocation, Long> {
-    void deleteByIdAndTimestampBefore(LocalDateTime cutoffTime);
+    void deleteByIdAndTimestampBefore(Long id, LocalDateTime cutoffTime);
 //    void deleteByUserIdAndIsTemporaryTrue(Long userId);
 }

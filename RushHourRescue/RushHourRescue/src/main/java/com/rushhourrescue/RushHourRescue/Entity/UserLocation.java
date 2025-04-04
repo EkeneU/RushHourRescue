@@ -16,12 +16,13 @@ import java.time.LocalDateTime;
 public class UserLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long location_id;
+    private Long id;
     private String status;
     private Double latitude;
     private Double longitude;
     private Double speed;
     private String zoneId;
+    private LocalDateTime timestamp;
     @OneToOne(mappedBy = "userLocation", cascade = CascadeType.ALL)
     private UserRequest request;
 

@@ -67,9 +67,9 @@ public class DataLogging {
     @After("deliveryComplete()")
     public void logDeliveryComplete(JoinPoint joinPoint) {
         Integer deliveryId = (Integer) joinPoint.getArgs()[0];
-        Long userId = (Long) joinPoint.getArgs()[1];
+        UserRequest request = (UserRequest) joinPoint.getArgs()[1];
         boolean success = (boolean) joinPoint.getArgs()[2];
-        loggingService.logDeliveryStatus(deliveryId, userId, success);
+        loggingService.logDeliveryStatus(deliveryId, request, success);
 
     }
 }

@@ -31,7 +31,6 @@ public class LoggingService {
     public void logUserLocation(UserLocation location){
         locationService.updateLocation(location);
     }
-    //TODO: Review this
     public void logEngagementTime(int id, EngagementTime session) {
 //        EngagementTime time = new EngagementTime();
 //        time.setEngagement_id(id);
@@ -64,11 +63,11 @@ public class LoggingService {
 
     }
 
-    //TODO: Review this.
-    public void logDeliveryStatus(Integer deliveryId, Long userId, boolean success) {
+    public void logDeliveryStatus(Integer deliveryId, UserRequest request, boolean success) {
         DeliveryStatus deliveryStatus = new DeliveryStatus();
         deliveryStatus.setDelivery_id(deliveryId);
         deliveryStatus.setSuccessful(success);
+        deliveryStatus.setRequest(request);
         deliveryStatus.setCompletionTime(LocalDateTime.now());
         statusRepository.save(deliveryStatus);
     }

@@ -24,7 +24,7 @@ public class UserRequestController {
     }
 
     @MessageMapping("/user.sendLocation")
-    @SendTo("/topic/location")
+    @SendTo("/topic/locations ")
     public void sendLocation(@Payload UserLocation location) {
          service.broadcastLocationUpdate(location);
     }

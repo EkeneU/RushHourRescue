@@ -13,9 +13,9 @@ public class PrivacyComplianceService {
     private UserLocationRepository repository;
 
     @Scheduled
-    public void deleteTemporaryLocationLogs() {
+    public void deleteTemporaryLocationLogs(Long id) {
         LocalDateTime cutoffTime = LocalDateTime.now().minusMinutes(60);
-        repository.deleteByIdAndTimestampBefore(cutoffTime);
+        repository.deleteByIdAndTimestampBefore(id, cutoffTime);
         System.out.println("Deleted temporary location logs before " + cutoffTime);
     }
     public void deleteTemporaryLocationLogsForUser(Long userId){

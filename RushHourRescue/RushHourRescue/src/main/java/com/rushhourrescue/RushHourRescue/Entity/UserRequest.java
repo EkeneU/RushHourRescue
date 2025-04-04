@@ -1,9 +1,9 @@
 package com.rushhourrescue.RushHourRescue.Entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class UserRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +22,7 @@ public class UserRequest {
     private String sex;
     private String email;
     private String user_password;
-    private LocalDateTime request_time;
+    private LocalDateTime requestTime;
 
     @Enumerated(EnumType.STRING)
     private RequestStatus status;

@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface EngagementTimeRepository extends JpaRepository<EngagementTime, Integer> {
 
-    EngagementTime findTopByUserIdAndSessionEndIsNullOrderBySessionStartDesc(Long userId);
+//    EngagementTime findTopByUserIdAndSessionEndIsNullOrderBySessionStartDesc(Long userId);
 }
